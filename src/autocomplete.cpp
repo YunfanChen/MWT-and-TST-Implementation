@@ -6,6 +6,7 @@
 #include <sstream>
 #include <vector>
 #include "DictionaryTrie.hpp"
+#include "MWTNode.hpp"
 #include "util.hpp"
 
 using namespace std;
@@ -73,7 +74,11 @@ int main(int argc, char** argv) {
         cout << "Enter a number of completions:" << endl;
         cin >> numberOfCompletions;
 
-        // TODO
+        vector<string> completion =
+            dt->predictCompletions(word, numberOfCompletions);
+        for (int i = 0; i < completion.size(); ++i) {
+            cout << completion[i] << endl;
+        }
 
         cout << "Continue? (y/n)" << endl;
         cin >> cont;
