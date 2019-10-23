@@ -3,6 +3,8 @@
     "gitlens.blame.compact": false,
     "files.associations": {
         "new": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "hash_map": "cpp",
+        "unordered_map": "cpp"
     }
 }
