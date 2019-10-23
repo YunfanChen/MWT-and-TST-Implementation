@@ -16,13 +16,13 @@ using namespace std;
 
 class MWTNode {
   public:
-    bool isEnd;
+    bool end;
     unordered_map<char, MWTNode*> children;
     string word;
     int count;
 
     MWTNode() {
-        isEnd = false;
+        end = false;
         count = 0;
     }
 
@@ -36,9 +36,9 @@ class MWTNode {
 
     bool containsKey(char ch) { return children.at(ch) != NULL; }
 
-    void setEnd() { isEnd = true; }
+    void setEnd() { end = true; }
 
-    bool isEnd() { return isEnd; }
+    bool isEnd() { return end; }
 };
 
 #endif  // MWTNODE_HPP

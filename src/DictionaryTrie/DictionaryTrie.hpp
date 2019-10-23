@@ -50,9 +50,11 @@ class DictionaryTrie {
         root = nullptr;
     }
 
-    bool cmp(const pair<string, int>& a, const pair<string, int>& b) {
-        return a.second > b.second;
-    }
+    struct CmpByValue {
+        bool cmp(const pair<string, int>& a, const pair<string, int>& b) {
+            return a.second > b.second;
+        }
+    };
 
   public:
     /* TODO: add function header */
@@ -89,7 +91,7 @@ class DictionaryTrie {
                 return false;
             }
         }
-        if (node->isEnd == true) {
+        if (node->isEnd() == true) {
             delete node;
             return true;
         } else {
@@ -104,12 +106,12 @@ class DictionaryTrie {
         MWTNode* node = searchNode(prefix);
         stack<MWTNode*> sk;
         vector<string> res(numCompletions);
-        map<string, int> kvmap;
+        map<string, int, CmpByValue> kvmap;
         if (numCompletions == 0) return res;
         sk.push(node);
         while (!sk.empty()) {
             MWTNode* node2 = sk.top();
-            if (node2->isEnd == true) {
+            if (node2->isEnd() == true) {
                 kvmap.insert(make_pair(node2->word, node2->count));
             }
             stack<MWTNode*> sk2;
@@ -121,11 +123,10 @@ class DictionaryTrie {
             }
             while (!sk2.empty()) {
                 MWTNode* node3 = sk2.top();
-                sk.push(node);
+                sk.push(node3);
             }
         }
         vector<pair<string, int>> vec(kvmap.begin(), kvmap.end());
-        sort(vec.begin(), vec.end(), cmp);
         for (int i = 0; i < numCompletions; ++i) {
             if (i == vec.size()) break;
             res.push_back(vec[i].first);
