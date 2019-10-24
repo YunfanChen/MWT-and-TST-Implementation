@@ -1,12 +1,13 @@
 /**
- * TODO: File Header
+ * This file is define the function in DictionaryTrie.
  *
- * Author:
+ * Author: Yunfan Chen
  */
 #include "DictionaryTrie.hpp"
 #include <iostream>
 #include "algorithm"
 
+/** My sort method. */
 bool cmpByCount(const pair<string, int>& a, const pair<string, int>& b) {
     if (a.second == b.second) {
         return a.first < b.first;
@@ -14,7 +15,7 @@ bool cmpByCount(const pair<string, int>& a, const pair<string, int>& b) {
     return a.second > b.second;
 }
 
-/** */
+/** Serach a word and return a node object.*/
 MWTNode* DictionaryTrie::searchNode(string word) {
     if (word.size() == 0) return nullptr;
     MWTNode* node = root;
@@ -22,14 +23,13 @@ MWTNode* DictionaryTrie::searchNode(string word) {
         if (node->containsKey(ch)) {
             node = node->get(ch);
         } else {
-            delete node;
             return nullptr;
         }
     }
     return node;
 }
 
-/** */
+/** Delete all node in this Trie. */
 void DictionaryTrie::deleteAll(MWTNode* root) {
     if (root == nullptr) return;
     unordered_map<char, MWTNode*>::iterator iter;
@@ -41,10 +41,10 @@ void DictionaryTrie::deleteAll(MWTNode* root) {
     delete root;
 }
 
-/* TODO */
+/* Initialize the Trie. */
 DictionaryTrie::DictionaryTrie() { root = new MWTNode(); }
 
-/* TODO */
+/* Insert a word in this Trie */
 bool DictionaryTrie::insert(string word, unsigned int freq) {
     if (word.size() == 0) return false;
     MWTNode* node = root;
@@ -55,7 +55,6 @@ bool DictionaryTrie::insert(string word, unsigned int freq) {
     if (node->word.size() == 0) {
         node->word.assign(word);
     } else {
-        delete node;
         return false;
     }
     node->count = freq;
@@ -63,7 +62,7 @@ bool DictionaryTrie::insert(string word, unsigned int freq) {
     return true;
 }
 
-/* TODO */
+/* See if can find a word in this Trie */
 bool DictionaryTrie::find(string word) const {
     if (word.size() == 0) return false;
     MWTNode* node = root;
@@ -80,32 +79,27 @@ bool DictionaryTrie::find(string word) const {
     return false;
 }
 
-/* TODO */
+/* Predict completions according to prefix */
 vector<string> DictionaryTrie::predictCompletions(string prefix,
                                                   unsigned int numCompletions) {
     MWTNode* node = searchNode(prefix);
     stack<MWTNode*> sk;
-    vector<string> res(numCompletions);
-    // map<int, vector<string>> kvmap;
+    vector<string> res;
     vector<pair<string, int>> completion;
     if (numCompletions == 0) return res;
     sk.push(node);
     while (!sk.empty()) {
         MWTNode* node2 = sk.top();
+        sk.pop();
         if (node2->isEnd() == true) {
             // kvmap.insert(make_pair(node2->count, node2->word));
             completion.emplace_back(node2->word, node2->count);
         }
-        stack<MWTNode*> sk2;
         unordered_map<char, MWTNode*>::iterator iter;
         iter = node2->children.begin();
         while (iter != node2->children.end()) {
-            sk2.push(iter->second);
+            sk.push(iter->second);
             iter++;
-        }
-        while (!sk2.empty()) {
-            MWTNode* node3 = sk2.top();
-            sk.push(node3);
         }
     }
     sort(completion.begin(), completion.end(), cmpByCount);
@@ -122,5 +116,5 @@ std::vector<string> DictionaryTrie::predictUnderscores(
     return {};
 }
 
-/* TODO */
+/* Delete the trie */
 DictionaryTrie::~DictionaryTrie() { deleteAll(root); }

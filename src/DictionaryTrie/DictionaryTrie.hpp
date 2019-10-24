@@ -29,16 +29,16 @@ class DictionaryTrie {
     void deleteAll(MWTNode* root);
 
   public:
-    /* TODO: add function header */
+    /* Initialize DictionaryTrie */
     DictionaryTrie();
 
-    /* TODO: add function header */
+    /* Insert a word in this Trie */
     bool insert(string word, unsigned int freq);
 
-    /* TODO: add function header */
+    /* See if can find a word in this Trie */
     bool find(string word) const;
 
-    /* TODO: add function header */
+    /* Predict completions according to prefix */
     vector<string> predictCompletions(string prefix,
                                       unsigned int numCompletions);
 
@@ -46,7 +46,7 @@ class DictionaryTrie {
     vector<string> predictUnderscores(string pattern,
                                       unsigned int numCompletions);
 
-    /* TODO: add function header */
+    /* Delete tree*/
     ~DictionaryTrie();
 };
 
