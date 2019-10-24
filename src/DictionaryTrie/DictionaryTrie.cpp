@@ -17,7 +17,7 @@ bool cmpByCount(const pair<string, int>& a, const pair<string, int>& b) {
 
 /** Serach a word and return a node object.*/
 MWTNode* DictionaryTrie::searchNode(string word) {
-    if (word.size() == 0) return nullptr;
+    if (word.size() == 0) return root;
     MWTNode* node = root;
     for (char ch : word) {
         if (node->containsKey(ch)) {
