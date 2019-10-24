@@ -27,14 +27,19 @@ class MWTNode {
     }
 
     void put(char ch) {
-        if (children.at(ch) == nullptr) {
+        if (children.find(ch) == children.end()) {
             children.insert({ch, new MWTNode()});
         }
     }
 
-    MWTNode* get(char ch) { return children.at(ch); }
+    MWTNode* get(char ch) {
+        if (children.find(ch) == children.end()) {
+            return nullptr;
+        }
+        return children[ch];
+    }
 
-    bool containsKey(char ch) { return children.at(ch) != NULL; }
+    bool containsKey(char ch) { return get(ch) != nullptr; }
 
     void setEnd() { end = true; }
 
