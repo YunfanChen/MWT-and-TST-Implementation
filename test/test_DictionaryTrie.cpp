@@ -97,3 +97,27 @@ TEST(DictTrieTests, TEST_SEVEN) {
     vec.push_back("a");
     ASSERT_EQ(dict.predictUnderscores("_", 3), vec);
 }
+
+TEST(DictTrieTests, TEST_EIGHT) {
+    DictionaryTrie dict;
+    dict.insert("apo", 10);
+    dict.insert("ban", 20);
+    dict.insert("app", 5);
+    dict.insert("appli", 100);
+    vector<string> vec;
+    vec.push_back("ban");
+    vec.push_back("apo");
+    vec.push_back("app");
+    ASSERT_EQ(dict.predictUnderscores("___", 30000), vec);
+}
+
+TEST(DictTrieTests, TEST_NINE) {
+    DictionaryTrie dict;
+    dict.insert("pass PA1", 10);
+    dict.insert("do some homework", 20);
+    dict.insert("go out", 5);
+    dict.insert("no bugs please", 100);
+    vector<string> vec;
+    vec.push_back("pass PA1");
+    ASSERT_EQ(dict.predictUnderscores("pass P__", 1), vec);
+}
