@@ -26,6 +26,8 @@ class DictionaryTrie {
 
     MWTNode* searchNode(string word);
 
+    void searchUnderscores(string word, int index, MWTNode* node);
+
     void deleteAll(MWTNode* root);
 
   public:

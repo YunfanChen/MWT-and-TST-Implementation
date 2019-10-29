@@ -47,6 +47,8 @@ bool fileValid(const char* fileName) {
  */
 int main(int argc, char** argv) {
     const int NUM_ARG = 2;
+    bool flag =
+        true;  // judage whether use predictCompletions or predictUnderscores
     if (argc != NUM_ARG) {
         cout << "Invalid number of arguments.\n"
              << "Usage: ./autocomplete <dictionary filename>" << endl;
@@ -74,10 +76,25 @@ int main(int argc, char** argv) {
         cout << "Enter a number of completions:" << endl;
         cin >> numberOfCompletions;
 
-        vector<string> completion =
-            dt->predictCompletions(word, numberOfCompletions);
-        for (int i = 0; i < completion.size(); ++i) {
-            cout << completion[i] << endl;
+        for (char ch : word) {
+            if (ch == '_') {
+                flag = false;
+                break;
+            }
+        }
+
+        if (flag == false) {
+            vector<string> completion =
+                dt->predictCompletions(word, numberOfCompletions);
+            for (int i = 0; i < completion.size(); ++i) {
+                cout << completion[i] << endl;
+            }
+        } else {
+            vector<string> completion =
+                dt->predictUnderscores(word, numberOfCompletions);
+            for (int i = 0; i < completion.size(); ++i) {
+                cout << completion[i] << endl;
+            }
         }
 
         cout << "Continue? (y/n)" << endl;
