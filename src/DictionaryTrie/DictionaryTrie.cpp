@@ -20,36 +20,37 @@ vector<MWTNode*> uScoresNode;
 /** Serach a word and return a node object.*/
 void DictionaryTrie::searchUnderscores(string word, int index, MWTNode* node) {
     if (word.size() == 0) return;
-    cout << "now word length is :" << word.size() << endl;
-    cout << "now word index is :" << index << endl;
+    // cout << "now word length is :" << word.size() << endl;
+    // cout << "now word index is :" << index << endl;
     if (index == word.size() - 1 &&
         (word[index] - '_' == 0 || node->containsKey(word[index]))) {
-        cout << "jinlaile!!!" << endl;
+        // cout << "jinlaile!!!" << endl;
         if (word[index] == '_') {
-            cout << "!!!jinrupanduan" << endl;
+            // cout << "!!!jinrupanduan" << endl;
             unordered_map<char, MWTNode*>::iterator iter;
             iter = node->children.begin();
             while (iter != node->children.end()) {
                 if (iter->second->isEnd() == true) {
                     uScoresNode.emplace_back(iter->second);
-                    cout << "now entered is " << iter->second->word << endl;
+                    // cout << "now entered is " << iter->second->word << endl;
                 }
                 iter++;
             }
         } else if (node->get(word[index])->isEnd() == true) {
             uScoresNode.emplace_back(node->get(word[index]));
-            cout << "now entered is " << node->get(word[index])->word << endl;
+            // cout << "now entered is " << node->get(word[index])->word <<
+            // endl;
         }
         return;
     }
     if (node->containsKey(word[index])) {
         searchUnderscores(word, index + 1, node->get(word[index]));
     } else if (word[index] - '_' == 0) {
-        cout << "judge is '_' " << endl;
+        // cout << "judge is '_' " << endl;
         unordered_map<char, MWTNode*>::iterator iter;
         iter = node->children.begin();
         while (iter != node->children.end()) {
-            cout << "iter it... " << endl;
+            // cout << "iter it... " << endl;
             searchUnderscores(word, index + 1, iter->second);
             iter++;
         }
@@ -162,9 +163,7 @@ std::vector<string> DictionaryTrie::predictUnderscores(
     if (numCompletions == 0 || pattern.size() == 0 || root == nullptr)
         return res;
     vector<pair<string, int>> completion;
-    cout << uScoresNode.size() << endl;
     searchUnderscores(pattern, 0, root);
-    cout << uScoresNode.size() << endl;
     for (int i = 0; i < uScoresNode.size(); ++i) {
         completion.emplace_back(uScoresNode[i]->word, uScoresNode[i]->count);
     }
