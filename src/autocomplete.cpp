@@ -77,13 +77,13 @@ int main(int argc, char** argv) {
         cin >> numberOfCompletions;
 
         for (char ch : word) {
-            if (ch == '_') {
+            if (ch - '_' == 0) {
                 flag = false;
                 break;
             }
         }
 
-        if (flag == false) {
+        if (flag == true) {
             vector<string> completion =
                 dt->predictCompletions(word, numberOfCompletions);
             for (int i = 0; i < completion.size(); ++i) {
